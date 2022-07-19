@@ -1,0 +1,184 @@
+﻿@using NewSite24.EF
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>Stations and Directions</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="~/style.css">
+
+</head>
+
+<body>
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="viral-news-main-menu" id="stickyMenu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="viralnewsNav">
+
+                        <!-- Logo -->
+                        <a href="/"> <h1>ЖД Станции Москвы</h1></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul class="dropdown">
+                                    @foreach (Direction r in ViewBag.Directions)
+                                    {
+                        <li><a href="/News/Show/@r.Path">@r.Name</a></li>
+}
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ##### Hero Area Start ##### -->
+    <div class="hero-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <main>
+                            @RenderBody()
+                        </main>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+
+        <!-- Main Footer Area -->
+        <div class="main-footer-area">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Footer Widget Area -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="footer-widget-area">
+                            <!-- Footer Logo -->
+                            <div class="footer-logo">
+                                <a href="/"> <h1>ЖД Станции Москвы</h1></a>
+                            </div>
+                            <!-- Footer Nav -->
+                            <div class="footer-nav">
+                                <ul class="dropdown">
+                                    @foreach (Direction r in ViewBag.Directions)
+                                    {
+                        <li><a href="/News/Show/@r.Path">@r.Name</a></li>
+}
+                                </ul>
+                            </div>
+
+                            <form action="/News/Search">
+                                <input type="text" placeholder="Search" name="text">
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <!-- Newsletter Widget -->
+                        <div class="newsletter-widget">
+                            <h4> Подписаться на <br>обновления</h4>
+                            <form action="#" method="post">
+                                <input type="text" name="text" placeholder="Имя">
+                                <input type="email" name="email" placeholder="Email">
+                                <button type="submit" class="btn w-100">Подписаться</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Footer Area -->
+        <div class="bottom-footer-area">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <!-- Copywrite -->
+                        <p>
+                            <a href="#">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const elTrendingNews = document.getElementById('trendingNews');
+        const elChatMessages = document.getElementById('chatMessages');
+        const elAddMessage = document.getElementById('addMessage');
+        const elMessage = document.getElementById('message');
+        const elAddMessageFrame = document.getElementById('addMessageFrame');
+
+        elAddMessage.addEventListener("click", () => {
+            elAddMessageFrame.src = "/Chat/AddMessage?message=" + elMessage.value;
+        });
+
+        function reqListener() {
+            elTrendingNews.innerHTML = '';
+            const data = JSON.parse(this.responseText);
+            elTrendingNews.insertAdjacentHTML('afterbegin', `<p>${data.title}</p>`);
+        }
+
+        setInterval(() => {
+            //  window.location.reload();
+            const oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", reqListener);
+            oReq.open("GET", "/News/TrendingNews");
+            oReq.send();
+        }, 5000);
+
+        setInterval(() => {
+            // elChatMessages.src = elChatMessages.src;
+
+            fetch('/Chat/Messages').
+                then(response => response.json())
+                .then(data => {
+                    elChatMessages.innerHTML = '';
+                    for (msg of data) {
+                        elChatMessages.insertAdjacentHTML('afterbegin', `<p>${msg.message}</p>`);
+                    }
+                });
+
+        }, 2000);
+
+
+    </script>
+</body>
+</html>

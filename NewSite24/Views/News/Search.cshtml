@@ -1,0 +1,23 @@
+﻿@using NewSite24.EF
+
+@{
+    Layout = "Master.cshtml";
+}
+
+<span>По вашему запросу найдено: @ViewBag.Station.Count публикаций</span>
+@foreach (Station p in ViewBag.Station)
+{
+    <div class="trand-right-single d-flex">
+        <div class="trand-right-img">
+            <img src="/images/@(p.Id)_.jpg" alt="@p.Name" width="200" height="160">
+        </div>
+        <div class="trand-right-cap">
+            <span class="color1">
+                <a href="/News/Station/@p.Path">
+                    @p.Name
+                </a>
+            </span>
+            <h4><a href="/News/Station/@p.Path">@p.Text</a></h4>
+        </div>
+    </div>
+}

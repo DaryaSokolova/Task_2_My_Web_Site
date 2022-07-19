@@ -1,0 +1,166 @@
+﻿@using NewSite.EF
+
+@{
+    Layout = "Master.cshtml";
+}
+
+<!-- ##### Blog Area Start ##### -->
+<div class="blog-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="blog-posts-area">
+
+                    <!-- Single Featured Post -->
+                    <div class="single-blog-post-details">
+                        <div class="post-thumb">
+                            <img src="/images/@(ViewBag.Station.Id)_.jpg" alt="@ViewBag.Station.Name" />
+                        </div>
+                        <div class="post-data">
+
+                            <h1>@ViewBag.Station.Name</h1>
+
+                            <div class="post-meta">
+
+                                <!-- Post Details Meta Data -->
+                                <div class="post-details-meta-data mb-50 d-flex align-items-center justify-content-between">
+                                    <!-- View Comments -->
+                                    <div class="view-comments">
+                                        <p class="views">@ViewBag.Station.Views Views</p>
+                                        <a href="#comments" class="comments">@ViewBag.Station.Comments comments</a>
+                                    </div>
+                                </div>
+
+                                <p>@ViewBag.Station.Text</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment Area Start -->
+                    <div class="comment_area clearfix" id="comments">
+                        <h4 class="title mb-70">Комментарии</h4>
+                        <div>
+                            @foreach (Comment comment in ViewBag.Comments)
+                            {
+                                <ol>
+                                    <li class="single_comment_area">
+                                        <div class="comment-content d-flex">
+                                            <div class="comment-meta">
+                                                <a href="#" class="post-author">@comment.Nick</a>
+                                                <a href="#" class="post-date">@comment.DateTime.ToString("dd.MM.yyyy HH:mm:ss")</a>
+                                                <p>@comment.Text</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            }
+                        </div>
+                    </div>
+
+
+                    <div class="post-a-comment-area">
+                        <h4 class="mb-70">Опубликовать комментарий</h4>
+
+                        <!-- Reply Form -->
+                        <form action="/News/Station/@ViewBag.Station.Path" method="post">
+                            <div class="contact-form-area">
+                                <form action="#" method="post">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-6">
+                                            <input type="text" class="form-control" name="nick" placeholder="Имя*">
+                                        </div>
+                                        <div class="col-12">
+                                            <textarea name="text" class="form-control" cols="30" rows="10" placeholder="Текст комментария"></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn viral-btn mt-30" type="submit" aria-hidden="true">Отправить</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="blog-sidebar-area">
+
+                    <!-- Newsletter Widget -->
+                    <div class="newsletter-widget mb-70">
+                        <h4>Подписаться на <br>обновления</h4>
+                        <form action="#" method="post">
+                            <input type="text" name="text" placeholder="Имя">
+                            <input type="email" name="email" placeholder="Email">
+                            <button type="submit" class="btn w-100">Подписаться</button>
+                        </form>
+                    </div>
+
+                    <!-- Latest Comments -->
+                    <div class="latest-comments-widget">
+                        <div id="TrendingNews">
+
+                        </div>
+                        <h4>Популярные комментарии</h4>
+
+                        <!-- Single Comment Widget -->
+                        <div class="single-comments d-flex">
+                            <div class="comments-thumbnail">
+                                <img src="img/bg-img/t1.jpg" alt="">
+                            </div>
+                            <div class="comments-text">
+                                <a href="#"><span>Мария Горина</span> Скоро закроют на ремонт.</a>
+                                <p>06:34 am, April 14, 2018</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Comment Widget -->
+                        <div class="single-comments d-flex">
+                            <div class="comments-thumbnail">
+                                <img src="img/bg-img/t2.jpg" alt="">
+                            </div>
+                            <div class="comments-text">
+                                <a href="#"><span>Георгий Молотов</span> ...</a>
+                                <p>06:34 am, April 14, 2018</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Comment Widget -->
+                        <div class="single-comments d-flex">
+                            <div class="comments-thumbnail">
+                                <img src="img/bg-img/t3.jpg" alt="">
+                            </div>
+                            <div class="comments-text">
+                                <a href="#"><span>Николай Николаев</span> Удобно. </a>
+                                <p>06:34 am, April 14, 2018</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div>
+        @foreach (Comment comment in ViewBag.Comments)
+        {
+            <div>
+                @comment.DateTime.ToString("dd.MM.yyyy HH:mm:ss")
+                <b>@comment.Nick</b>: @comment.Text
+            </div>
+        }
+
+    </div>*@
+
+@*<form action="/News/Station/@ViewBag.Station.Path" method="post">
+        <div>
+            Ник: <input type="text" name="nick" />
+        </div>
+        <div>
+            <textarea cols="80" rows="5" name="text"></textarea>
+        </div>
+        <button type="submit">
+            Добавить комментарий <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+    </form>*@
